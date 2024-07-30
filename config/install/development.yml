@@ -2,8 +2,6 @@ env:
     APPLICATION_ENV: development
 
 stores:
-    - DE
-    - AT
     - US
 
 command-timeout: 3600
@@ -139,7 +137,6 @@ sections:
             pre: 'hidden/maintenance-zed-on'
             stores:
                 - US
-                - DE
             groups:
                 - propel
 
@@ -153,7 +150,6 @@ sections:
             command: 'vendor/bin/console propel:database:create'
             stores:
                 - US
-                - DE
             groups:
                 - propel
 
@@ -161,7 +157,6 @@ sections:
             command: 'vendor/bin/console propel:pg-sql-compat'
             stores:
                 - US
-                - DE
             groups:
                 - propel
 
@@ -169,7 +164,6 @@ sections:
             command: "vendor/bin/console propel:schema:copy"
             stores:
                 - US
-                - DE
             groups:
                 - propel
 
@@ -188,7 +182,6 @@ sections:
             breakOnFailure: false
             stores:
                 - US
-                - DE
             groups:
                 - propel
 
@@ -203,7 +196,6 @@ sections:
             command: 'vendor/bin/console propel:migrate'
             stores:
                 - US
-                - DE
             groups:
                 - propel
 
@@ -223,7 +215,6 @@ sections:
             timeout: 360000
             stores:
                 - US
-                - DE
 
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'
@@ -248,7 +239,6 @@ sections:
         import-eu-region-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
             stores:
-                - DE
 
         import-us-region-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/full_US.yml'
@@ -259,7 +249,6 @@ sections:
             command: 'vendor/bin/console product-label:relations:update'
             stores:
                 - US
-                - DE
 
     setup-glue:
         controller-cache-warmup:

@@ -18,6 +18,18 @@
 
 {% block body %}
     <ul class="menu menu--lvl-0">
+    <li class="col {{ config.name }}__actions-item menu__item--all-categories">
+							<button class="link link--alternative js-page-layout-main__side-drawer-trigger ">
+								
+                                <span class="menu__text menu__text--lvl-0">
+                                {% include atom('icon') with {
+                                    data: {
+                                        name: 'bars',
+                                    },
+                                } only %}
+                                All categories</span>
+							</button>
+						</li>
         {% for node in data.nodes %}
             {% set hasChildren = node.children | length > 0 %}
             

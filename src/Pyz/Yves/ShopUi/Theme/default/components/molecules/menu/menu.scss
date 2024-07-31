@@ -201,11 +201,21 @@
             @include helper-breakpoint-media-min($xl) {
                 display: flex;
                 margin: 0 rem(-20);
+                align-items: center;
+
             }
 
             @include helper-breakpoint-media-min($xxl) {
                 margin: 0 rem(-30);
             }
+        }
+        &__item--all-categories .menu__text--lvl-0 {
+            background: #e7eaee;
+            color: #000;
+            border: .0625rem solid #dce0e5;
+            padding: 1rem;
+            position: relative;
+            line-height: 1.375rem;
         }
 
         &__item--lvl-0 {
@@ -283,7 +293,8 @@
             }
 
             &:hover {
-                color: $setting-color-gray-4;
+                // color: $setting-color-gray-4;
+                color: $setting-color-green;
             }
         }
 

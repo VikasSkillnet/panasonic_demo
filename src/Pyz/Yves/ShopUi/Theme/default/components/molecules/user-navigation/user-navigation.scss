@@ -102,10 +102,12 @@
             align-items: center;
             height: rem(38);
             padding-right: rem(4);
+            color: $setting-color-white;
 
             @include helper-breakpoint-media-min($lg) {
                 align-items: flex-start;
                 padding: 0;
+                color: $setting-color-white;
             }
         }
 
@@ -114,10 +116,12 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            color: $setting-color-white;
 
             @include helper-breakpoint-media-min($lg) {
                 display: inline;
                 white-space: normal;
+                color: $setting-color-white;
             }
         }
 

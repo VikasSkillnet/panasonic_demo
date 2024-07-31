@@ -75,6 +75,23 @@
             ]},
         } only %}
     </li>
+     <li class="{{ config.name }}__item">
+     {# <a class="{{ config.name }}__link" href="{{ url('compare') }}"> #}
+     <a class="{{ config.name }}__link">
+            <span class="{{ config.name }}__icon">
+                {% include atom('icon') with {
+                    modifiers: ['compare', 'big'],
+                    data: {
+                        name: 'compare',
+                    },
+                } only %}
+            </span>
+            <span class="{{ config.name }}__text">
+            {# {{ 'compare.page-title'|trans }} #}
+            Product Comparison
+            </span>
+        </a>
+     </li>
     <li class="{{ config.name }}__item">
         <a class="{{ config.name }}__link" href="{{ url('quick-order') }}">
             <span class="{{ config.name }}__icon">

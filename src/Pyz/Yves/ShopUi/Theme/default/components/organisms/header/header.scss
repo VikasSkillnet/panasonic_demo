@@ -52,7 +52,7 @@
         }
 
         &__main {
-            background: $setting-color-gray-6;
+            background: $setting-color-navy-blue;
             padding: rem(8) 0 0;
             min-height: rem(56);
 
@@ -116,6 +116,7 @@
 
             @include helper-breakpoint-media-min($xl) {
                 display: none;
+                // display: block;
             }
 
             &-item {

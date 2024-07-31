@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block body %}
-    <form action="{{ data.searchUrl }}">
+    <form action="{{ data.searchUrl }}" class="input-with-icon">
         <input
             class="suggest-search__input {{ config.jsName }}__input--{{ attributes['data-search-id'] }}"
             name="q"
@@ -25,6 +25,13 @@
             value="{{ data.searchValue }}"
             autocomplete="off"
         >
+        {# <span class="custom-element search-by-voice" data-qa="component search-by-voice" target-field="js-search-form__input--desktop"> #}
+		<button type="button" class="search-by-voice__button js-search-by-voice__start-button {{ config.name }}__button {{ config.name }}__button--microphone">
+			<svg class="icon icon--big" data-qa="component icon" title="microphone">
+				<use xlink:href="#:microphone" class=""></use>
+			</svg>
+		</button>
+	{# </span> #}
 
         <button class="{{ config.name }}__button {{ config.name }}__button--submit">
             {% include atom('icon') with {
@@ -35,6 +42,7 @@
                 },
             } only %}
         </button>
+        
 
         <button type="button" class="{{ config.name }}__button {{ config.name }}__button--close {% block close %}{% endblock %}">
             {% include atom('icon') with {

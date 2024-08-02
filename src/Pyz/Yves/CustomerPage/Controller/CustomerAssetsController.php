@@ -99,7 +99,7 @@ class CustomerAssetsController extends AbstractCustomerController
         if ($responesCustomerAssets->getIsDeleted()) {
             $this->addSuccessMessage('Assets Deleted Successfully... !');
         } else {
-            $this->addErrorMessage('Spmething went wrong... !');
+            $this->addErrorMessage('Somthing went wrong... !');
         }
 
         return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_MY_ASSETS);

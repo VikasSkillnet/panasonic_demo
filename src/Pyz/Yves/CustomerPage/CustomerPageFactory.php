@@ -7,8 +7,12 @@
 
 namespace Pyz\Yves\CustomerPage;
 
+use Pyz\Client\CustomerAssets\CustomerAssetsClientInterface;
+use Pyz\Yves\CustomerPage\Form\FormFactory;
+use Pyz\Yves\CustomerPage\Reader\CustomerAssetsReaderInterface;
 use Spryker\Client\Session\SessionClientInterface;
 use SprykerShop\Yves\CustomerPage\CustomerPageFactory as SprykerCustomerPageFactory;
+use Pyz\Yves\CustomerPage\Reader\CustomerAssetsReader;
 
 class CustomerPageFactory extends SprykerCustomerPageFactory
 {
@@ -18,5 +22,31 @@ class CustomerPageFactory extends SprykerCustomerPageFactory
     public function getSessionClient(): SessionClientInterface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_SESSION);
+    }
+    /**
+     * @return \Pyz\Client\CustomerAssets\CustomerAssetsClientInterface
+     */
+    public function getCustomerAssetsClient(): CustomerAssetsClientInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_CUSTOMER_ASSETS);
+    }
+
+      /**
+     * @return \Pyz\Yves\CustomerPage\Reader\CustomerAssetsReaderInterface
+     */
+    public function createCustomerAssetsreader(): CustomerAssetsReaderInterface
+    {
+        return new CustomerAssetsReader(
+            $this->getCustomerAssetsClient(),
+            $this->getConfig(),
+        );
+    }
+
+       /**
+     * @return \Pyz\Yves\CustomerPage\Form\FormFactory
+     */
+    public function createCustomerFormFactory()
+    {
+        return new FormFactory();
     }
 }

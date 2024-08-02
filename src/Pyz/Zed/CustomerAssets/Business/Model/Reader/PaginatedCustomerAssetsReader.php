@@ -7,13 +7,17 @@
 
 namespace Pyz\Zed\CustomerAssets\Business\Model\Reader;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CustomerAssetsListTransfer;
+use Generated\Shared\Transfer\CustomerAssetsTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
 use Orm\Zed\CustomerAssets\Persistence\Base\PyzCustomerAssetsQuery;
 use Pyz\Zed\CustomerAssets\Persistence\CustomerAssetsQueryContainerInterface;
+use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Sales\Business\SalesFacade;
 
-
-
-class PaginatedCustomerOrderReader implements CustomerAssetsInterface
+class PaginatedCustomerAssetsReader implements CustomerAssetsInterface
 {
 
     /**
@@ -22,13 +26,27 @@ class PaginatedCustomerOrderReader implements CustomerAssetsInterface
     protected CustomerAssetsQueryContainerInterface $queryContainer;
 
     /**
+     * @var \Spryker\Zed\Sales\Business\SalesFacadeInterface
+     */
+    protected SalesFacade $salesFacade;
+
+    /**
+     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
+     */
+    protected ProductFacade $productFacde;
+
+    /**
      * 
      * @param \Pyz\Zed\CustomerAssets\Persistence\CustomerAssetsQueryContainerInterface $queryContainer
      */
     public function __construct(
-        CustomerAssetsQueryContainerInterface $queryContainer
+        CustomerAssetsQueryContainerInterface $queryContainer,
+        SalesFacade $salesFacade,
+        ProductFacade $productFacde,
     ) {
         $this->queryContainer = $queryContainer;
+        $this->salesFacade = $salesFacade;
+        $this->productFacde = $productFacde;
     }
 
 
@@ -44,6 +62,31 @@ class PaginatedCustomerOrderReader implements CustomerAssetsInterface
         $customerAssetsQuery = $this->queryContainer->queryCustomerAssets($idCustomer);
 
         $customerAssetsList = $this->getOrderCollection($customerAssetsListTransfer, $customerAssetsQuery);
+
+        $customerAssets = new ArrayObject();
+        foreach ($customerAssetsList as $key => $customerAssetEntity) {
+            $customerAssetsTransfer = new CustomerAssetsTransfer();
+            $customerAssetsTransfer->fromArray($customerAssetEntity->toArray());
+            $productConcrete = $this->productFacde->getProductConcrete($customerAssetsTransfer->getFkSku());
+            if ($customerAssetsTransfer->getFkSalesOrderItem()) {
+                $orderItemCollection = $this->salesFacade->getOrderItems((new OrderItemFilterTransfer())->setSalesOrderItemIds([$customerAssetsTransfer->getFkSalesOrderItem()]));
+                $customerAssetsTransfer->setOrderItem($orderItemCollection->getItems()[0]);
+            }
+
+            $customerAssetsTransfer->setProduct($productConcrete);
+            $imageSet = $productConcrete->getImageSets();
+            if (!empty($imageSet)) {
+                $images = $imageSet[0]->getProductImages();
+                if (!empty($images)) {
+                    $imageUrl = $images[0]->getExternalUrlSmall();
+                }
+            }
+            $customerAssetsTransfer->setImageUrl($imageUrl);
+
+            $customerAssets->append($customerAssetsTransfer);
+        }
+
+        $customerAssetsListTransfer->setCustomerAssets($customerAssets);
 
         return $customerAssetsListTransfer;
     }

@@ -5,7 +5,7 @@
         <column name="id_customer_assets" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_sku" required="true" type="VARCHAR"/>
         <column name="fk_customer" required="true" type="INTEGER"/>
-        <column name="fk_sales_order_item" required="true" type="INTEGER"/>
+        <column name="fk_sales_order_item" required="false" type="INTEGER"/>
 
         <foreign-key name="pyz_customer_assets-fk_sku" foreignTable="spy_product" phpName="Product" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_sku" foreign="sku"/>

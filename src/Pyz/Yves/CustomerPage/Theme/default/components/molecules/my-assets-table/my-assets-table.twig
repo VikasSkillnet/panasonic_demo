@@ -1,0 +1,92 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'my-assets-table',
+} %}
+
+
+{% define data = {
+    items: [],
+    customerAssets: required,
+} %}
+
+{% block body %}
+
+	{% if data.customerAssets is empty %}
+
+		<h1>No Assets Found</h1>
+	{% else %}
+		<table class="table table--expand table--responsive">
+			<thead>
+				<th>IMAGE</th>
+				<th>DEVICE DRIVER</th>
+				<th>BIOS CONFIG</th>
+				<th>RMA</th>
+				<th>HW WARRANTY</th>
+				<th>SUB. EXPIRY DATE</th>
+				<th>ASSET REPORT</th>
+			</thead>
+			<tbody>
+				{% for asset in data.customerAssets %}
+					<tr>
+						<td
+							class="transform-cell spacing-top spacing-top--inner spacing-top--big">
+							{# {% include molecule('product-item-image') with {
+																						modifiers: ['small'],
+																						data: {
+																							name: '',
+																							image: asset.imageUrl,
+																						},
+																					} only %} #}
+							<img src="{{ asset.imageUrl }}" alt="" height="50" width="50">
+
+						</td>
+						<td class="transform-cell">{{ asset.product.localizedAttributes[0].name }}</td>
+						<td class="transform-cell">NA</td>
+						<td class="transform-cell">NA</td>
+						<td class="transform-cell">NA</td>
+						<td class="transform-cell">12/31/2024</td>
+						<td class="transform-cell grid grid--center">
+							<a href="">
+								View 
+							</a>
+
+							{% block customerAssetsRemoveButton %}
+								{% widget 'AssetsRemoveButtonWidget' args [asset] only %}
+								{% block body %}
+									{% embed molecule('remote-form-submit') with {
+										data: {
+											label: 'assets_cancel_widget.remove_assets' | trans,
+											buttonClass: 'button--expand-sm-lg link',
+										},
+										attributes: {
+											'form-name': 'assetsCancelForm_' ~ data.assets.idCustomerAssets,
+											'form-action': path('customer/remove/assets', {'id-customer-assets': data.assets.idCustomerAssets}),
+											'field-id': 'assetsCancelForm__token' ~ data.assets.idCustomerAssets,
+											'field-name': 'assetsCancelForm[_token]',
+											'field-value': csrf_token('assetsCancelForm'),
+										},
+									} only %}
+										{% block innerSubmitActionContent %}
+										{% include molecule('table-action-span') with {
+												class: 'link link--alt link--action spacing-left',
+												data: {
+													icon: 'cross',
+													title: data.label,
+												},
+											} only %}
+										{% endblock %}
+									{% endembed %}
+								{% endblock %}
+								{% endwidget %}
+							{% endblock %}
+						</td>
+					</tr>
+				{% endfor %}
+
+			</tbody>
+		</table>
+
+	{% endif %}
+
+{% endblock %}

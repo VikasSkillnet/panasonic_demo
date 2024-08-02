@@ -4230,3 +4230,7 @@ merchant_relationship.mail.trans.merchant_relationship_delete.link,Händler kont
 
 customer.account.my.assets,My Assets,en_US
 customer.account.my.assets,My Assets,de_DE
+quick.add.assets,Quick Add Assets,en_US
+quick.add.assets,Quick Add Assets,de_DE
+assets_cancel_widget.remove_assets,Remove Assets,en_US
+assets_cancel_widget.remove_assets,Remove Assets,de_DE

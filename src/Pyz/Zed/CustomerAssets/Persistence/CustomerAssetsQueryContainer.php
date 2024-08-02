@@ -33,6 +33,7 @@ class CustomerAssetsQueryContainer extends AbstractQueryContainer implements Cus
         $query = $this->getFactory()->createCustomerAssetsQuery();
 
         $query->filterByFkCustomer($idCustomer);
+        
         if ($criteria !== null) {
             $query->mergeWith($criteria);
         }

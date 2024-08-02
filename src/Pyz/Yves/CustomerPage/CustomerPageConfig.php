@@ -11,6 +11,11 @@ use SprykerShop\Yves\CustomerPage\CustomerPageConfig as SprykerCustomerPageConfi
 
 class CustomerPageConfig extends SprykerCustomerPageConfig
 {
+
+    /**
+     * @var int
+     */
+    protected const DEFAULT_CUSTOMER_ASSETS_PER_PAGE = 3;
     /**
      * @var bool
      */
@@ -57,5 +62,15 @@ class CustomerPageConfig extends SprykerCustomerPageConfig
     public function isLocaleInLoginCheckPath(): bool
     {
         return true;
+    }
+
+     /**
+     * @api
+     *
+     * @return int
+     */
+    public function getDefaultCustomerAssetsPerPage(): int
+    {
+        return static::DEFAULT_CUSTOMER_ASSETS_PER_PAGE;
     }
 }

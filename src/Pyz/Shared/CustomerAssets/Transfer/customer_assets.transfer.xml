@@ -6,17 +6,21 @@
     <transfer name="CustomerAssets">
         <property name="idCustomerAssets" type="integer"/>
         <property name="fkSku" type="string"/>
+        <property name="imageUrl" type="string"/>
         <property name="fkCustomer" type="integer"/>
         <property name="fkSalesOrderItem" type="integer"/>
-        <property name="orderItem" type="OrderItem"/>
+        <property name="orderItem" type="Item"/>
         <property name="customer" type="Customer"/>
-        <property name="createAt" type="string"/>
-        <property name="updateAt" type="string"/>
+        <property name="product" type="ProductConcrete"/>
+        <property name="createdAt" type="string"/>
+        <property name="isDeleted" type="bool"/>
+        <property name="updatedAt" type="string"/>
     </transfer>
 
     <transfer name="CustomerAssetsList">
         <property name="customerAssets" type="CustomerAssets[]"/>
         <property name="pagination" type="Pagination"/>
+        <property name="idCustomer" type="integer"/>
     </transfer>
 
 </transfers>

@@ -20,6 +20,11 @@ class CustomerPageRouteProviderPlugin extends SprykerCustomerPageRouteProviderPl
     public const ROUTE_NAME_CUSTOMER_MY_ASSETS = 'customer/myassets';
 
     /**
+     * @var string
+     */
+    public const ROUTE_NAME_CUSTOMER_ASSETS_REMOVE = 'customer/remove/assets';
+
+    /**
      * Specification:
      * - Adds Routes to the RouteCollection.
      *
@@ -34,6 +39,7 @@ class CustomerPageRouteProviderPlugin extends SprykerCustomerPageRouteProviderPl
         $routeCollection = parent::addRoutes($routeCollection);
 
         $routeCollection = $this->addCustomerAssetsRoute($routeCollection);
+        $routeCollection = $this->addCustomerAssetsRemoveRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -48,6 +54,19 @@ class CustomerPageRouteProviderPlugin extends SprykerCustomerPageRouteProviderPl
     {
         $route = $this->buildRoute('/customer/myassets', 'CustomerPage', 'CustomerAssets', 'indexAction');
         $routeCollection->add(static::ROUTE_NAME_CUSTOMER_MY_ASSETS, $route);
+
+        return $routeCollection;
+    }
+    
+    /**
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addCustomerAssetsRemoveRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/customer/remove/assets', 'CustomerPage', 'CustomerAssets', 'removeAssetsAction');
+        $routeCollection->add(static::ROUTE_NAME_CUSTOMER_ASSETS_REMOVE, $route);
 
         return $routeCollection;
     }

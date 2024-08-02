@@ -28,6 +28,11 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
     public const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**
+     * @var string
+     */
+    public const CLIENT_CUSTOMER_ASSETS = 'CLIENT_CUSTOMER_ASSETS';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -37,6 +42,7 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
         $container = parent::provideDependencies($container);
 
         $container = $this->addSessionClient($container);
+        $container = $this->addCustomerAssetsClient($container);
 
         return $container;
     }
@@ -155,5 +161,19 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
         return [
             new MerchantShipmentCheckoutAddressStepPreGroupItemsByShipmentPlugin(),
         ];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerAssetsClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_CUSTOMER_ASSETS, function (Container $container) {
+            return $container->getLocator()->customerAssets()->client();
+        });
+
+        return $container;
     }
 }

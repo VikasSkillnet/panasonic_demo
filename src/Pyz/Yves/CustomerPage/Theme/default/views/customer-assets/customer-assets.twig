@@ -1,13 +1,93 @@
 {% extends template('page-layout-customer', 'CustomerPage') %}
 
 {% define data = {
-    activePage: 'myAssets'
+    activePage: 'myAssets',
+    
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _view.pagination.page,
+        paginationPath: 'customer/myassets',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true,
+    },
+
+    customerAssetsListTransfer: _view.customerAssetsListTransfer,
+    assetsQuickAddForm: _view.assetsQuickAddForm,
+    idCustomer: _view.idCustomer,
+    autocompleteFormClassName: '',
 } %}
 
+{% set jsPrefix = 'js-assets-' %}
+
 {% block customerContent %}
-	<div class="box">
-    <h1>Aashu</h1>
+	{% embed molecule('action-bar') with {
+        modifiers: ['first'],
+        data: {
+            title: 'customer.account.my.assets' | trans,
+        },
+        embed: {
+            jsPrefix: jsPrefix,
+        },
+    } only %}
+		{% block actions %}
+			<button class="button button--hollow button--justify-center {{ embed.jsPrefix }}filter-button">
+				{% include atom('icon') with {
+                    modifiers: ['filter'],
+                    class: 'spacing-right',
+                    data: {
+                        name: 'filter',
+                    },
+                } only %}
+				{{ 'quick.add.assets' | trans }}
+			</button>
+
+			{% include molecule('toggler-click') with {
+                attributes: {
+                    'trigger-class-name': embed.jsPrefix ~ 'filter-button',
+                    'target-class-name': embed.jsPrefix ~ 'form-section',
+                    'trigger-class-to-toggle': 'button--hollow-active',
+                },
+            } only %}
+		{% endblock %}
+	{% endembed %}
+
+	{% block quickAddBlocl %}
+		{{ form_start(data.assetsQuickAddForm) }}
+		{% do data.assetsQuickAddForm.sku.setRendered %}
+
+		<div class="{{ jsPrefix }}form-section is-hidden mb--4">
+			<div class="spacing-bottom spacing-bottom--big">
+				{% widget 'ProductConcreteSearchWidget' args [
+                    'ajax-provider' ~ 'assets',
+                    data.assetsQuickAddForm.sku.vars.full_name,
+                ] with {
+                    data: {
+                        autocompleteFormClassName: data.autocompleteFormClassName,
+                    },
+                } only %}
+                {% endwidget %}
+			</div>
+             {{ form_widget(data.assetsQuickAddForm.idCustomer, {'value': data.idCustomer}) }}
+
+			<button class="button button-primary spacing-right" type="submit">Submit</button>
+
+		</div>
+		{{ form_end(data.assetsQuickAddForm) }}
+	{% endblock %}
+
+	<div class="">
+		{% include molecule('my-assets-table', 'CustomerPage') with {
+            data: {
+                customerAssets: data.customerAssetsListTransfer.customerAssets
+            },
+        } only %}
+	</div>
+
     
-    </div>
+    {% block pagination %}
+        {% include molecule('pagination') with {
+            data: data.pagination,
+        } only %}
+    {% endblock %}
 
 {% endblock %}

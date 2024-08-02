@@ -137,6 +137,10 @@ sections:
             pre: 'hidden/maintenance-zed-on'
             stores:
                 - US
+<<<<<<< HEAD
+=======
+                # - DE
+>>>>>>> 58da64153543e31a09414befba6ecbffb76c381b
             groups:
                 - propel
 
@@ -150,6 +154,10 @@ sections:
             command: 'vendor/bin/console propel:database:create'
             stores:
                 - US
+<<<<<<< HEAD
+=======
+                # - DE
+>>>>>>> 58da64153543e31a09414befba6ecbffb76c381b
             groups:
                 - propel
 
@@ -157,6 +165,10 @@ sections:
             command: 'vendor/bin/console propel:pg-sql-compat'
             stores:
                 - US
+<<<<<<< HEAD
+=======
+                # - DE
+>>>>>>> 58da64153543e31a09414befba6ecbffb76c381b
             groups:
                 - propel
 
@@ -164,6 +176,10 @@ sections:
             command: "vendor/bin/console propel:schema:copy"
             stores:
                 - US
+<<<<<<< HEAD
+=======
+                # - DE
+>>>>>>> 58da64153543e31a09414befba6ecbffb76c381b
             groups:
                 - propel
 
@@ -182,6 +198,10 @@ sections:
             breakOnFailure: false
             stores:
                 - US
+<<<<<<< HEAD
+=======
+                # - DE
+>>>>>>> 58da64153543e31a09414befba6ecbffb76c381b
             groups:
                 - propel
 
@@ -196,6 +216,10 @@ sections:
             command: 'vendor/bin/console propel:migrate'
             stores:
                 - US
+<<<<<<< HEAD
+=======
+                # - DE
+>>>>>>> 58da64153543e31a09414befba6ecbffb76c381b
             groups:
                 - propel
 
@@ -215,6 +239,10 @@ sections:
             timeout: 360000
             stores:
                 - US
+<<<<<<< HEAD
+=======
+                # - DE
+>>>>>>> 58da64153543e31a09414befba6ecbffb76c381b
 
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'
@@ -239,6 +267,10 @@ sections:
         import-eu-region-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
             stores:
+<<<<<<< HEAD
+=======
+                # - DE
+>>>>>>> 58da64153543e31a09414befba6ecbffb76c381b
 
         import-us-region-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/full_US.yml'
@@ -249,6 +281,10 @@ sections:
             command: 'vendor/bin/console product-label:relations:update'
             stores:
                 - US
+<<<<<<< HEAD
+=======
+                # - DE
+>>>>>>> 58da64153543e31a09414befba6ecbffb76c381b
 
     setup-glue:
         controller-cache-warmup:

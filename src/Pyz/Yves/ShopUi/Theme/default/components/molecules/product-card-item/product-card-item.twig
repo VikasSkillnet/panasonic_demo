@@ -70,7 +70,20 @@
 									<div>
 										<a href="{{ listItem.url }}" class="{{ component.renderClass(config.name ~ '__title', modifiers) }} title title--h6" title="{{ listItem.name }}" itemprop="name">{{ listItem.name }}</a>
 									</div>
+									
 								{% endblock %}
+
+								{# Appointment Date #}
+										{# {% if listItem.appointmentDate %}
+											<div>
+												<label for="appointmentDate">
+													Appointment Date :-
+												</label>
+												<span>
+													{{ listItem.appointmentDate | date('d-m-Y H:i') }}
+												</span>
+											</div>
+										{% endif %} #}
 
 								{% block info %}
 									<div class="spacing-bottom">
@@ -80,17 +93,7 @@
 									</div>
 								{% endblock %}
 
-								{# Appointment Date #}
-										{% if listItem.appointmentDate %}
-											<div>
-												<label for="appointmentDate">
-													Appointment Date :-
-												</label>
-												<span>
-													{{ listItem.appointmentDate | date('d-m-Y H:i') }}
-												</span>
-											</div>
-										{% endif %}
+								
 
 								{% block productConfiguration %}
 									{% widget 'ProductConfigurationCartItemDisplayWidget' args [listItem] only %}{% endwidget %}
@@ -130,6 +133,18 @@
 										{% endif %} #}
 
 									{% endblock %}
+
+									{# Appointment Date #}
+										{% if listItem.appointmentDate %}
+											<div>
+												<label for="appointmentDate">
+													Appointment Date :-
+												</label>
+												<span>
+													{{ listItem.appointmentDate | date('d-m-Y H:i') }}
+												</span>
+											</div>
+										{% endif %}
 
 									{% block packagingUnitCart %}
 										{% set hasSubQuantity = false %}

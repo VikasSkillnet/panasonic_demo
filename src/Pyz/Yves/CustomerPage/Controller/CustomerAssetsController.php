@@ -55,8 +55,16 @@ class CustomerAssetsController extends AbstractCustomerController
             $customerAssetsListTransfer = new CustomerAssetsListTransfer();
             $customerAssetsListTransfer->setIdCustomer($currentCustomer->getIdCustomer());
 
+            /**
+             * @var \Generated\Shared\Transfer\CustomerAssetsListTransfer $customerAssetsListTransfer
+             */
             $customerAssetsListTransfer = $this->getFactory()->createCustomerAssetsreader()->getCustomerAssetsList($request, $customerAssetsListTransfer);
             $assetsQuickAddForm = $this->getFactory()->createCustomerFormFactory()->getAssetsQuickAddForm()->handleRequest($request);
+
+            foreach ($customerAssetsListTransfer->getCustomerAssets() as $key => $customerAssets) {
+                $concreteProductStorage = $this->getFactory()->getProductStorageClient()->findProductConcreteStorageData($customerAssets->getProduct()->getIdProductConcrete(), 'en_US');
+                $customerAssets->setPdpUrl($concreteProductStorage['url']);
+            }
 
             if ($assetsQuickAddForm->isSubmitted() && $assetsQuickAddForm->isValid()) {
                 $assetsData = $assetsQuickAddForm->getData();

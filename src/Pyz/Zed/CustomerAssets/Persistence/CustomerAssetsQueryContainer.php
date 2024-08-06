@@ -33,7 +33,7 @@ class CustomerAssetsQueryContainer extends AbstractQueryContainer implements Cus
         $query = $this->getFactory()->createCustomerAssetsQuery();
 
         $query->filterByFkCustomer($idCustomer);
-        
+
         if ($criteria !== null) {
             $query->mergeWith($criteria);
         }
@@ -55,12 +55,21 @@ class CustomerAssetsQueryContainer extends AbstractQueryContainer implements Cus
     public function queryCustomerAssets($idCustomer, ?FilterTransfer $filterTransfer = null)
     {
         $criteria = new Criteria();
-        if ($filterTransfer !== null) {
-            $criteria = (new PropelFilterCriteria($filterTransfer))
-                ->toCriteria();
-        }
+        $criteria = (new PropelFilterCriteria((new FilterTransfer())->setOrderBy('created_at')->setOrderDirection('DESC')))
+            ->toCriteria();
 
         return $this->querySalesOrdersByCustomerId($idCustomer, $criteria);
+    }
+
+    /**
+     * 
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
+     */
+    public function queryAllSalesOrderItemEntity()
+    {
+        return $this->getFactory()->createSpySalesOrderItemQuery()
+                ->joinWithOrder()
+                ->filterByIsAlradyAddedInAssets(false)->find();
     }
 
 }

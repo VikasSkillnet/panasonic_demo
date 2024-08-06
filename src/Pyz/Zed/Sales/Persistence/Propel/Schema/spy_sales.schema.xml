@@ -4,7 +4,7 @@
    
     <table name="spy_sales_order_item">
         <column name="appointment_date" type="VARCHAR" size="255" required="false"/>
-    
+        <column name="is_alrady_added_in_assets" type="BOOLEAN"  required="false"/>
     </table>
 
 

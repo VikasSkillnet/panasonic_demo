@@ -9,6 +9,7 @@ namespace Pyz\Zed\CustomerAssets\Persistence;
 
 use Orm\Zed\CustomerAssets\Persistence\PyzCustomerAssets;
 use Orm\Zed\CustomerAssets\Persistence\PyzCustomerAssetsQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 
@@ -27,6 +28,14 @@ class CustomerAssetsPersistenceFactory extends AbstractPersistenceFactory
     public function createCustomerAssetsQuery()
     {
         return PyzCustomerAssetsQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function createSpySalesOrderItemQuery()
+    {
+        return SpySalesOrderItemQuery::create();
     }
 
     /**

@@ -6,8 +6,10 @@
  */
 
 namespace Pyz\Zed\CustomerAssets\Business\Writter;
+
 use Generated\Shared\Transfer\CustomerAssetsTransfer;
 use Pyz\Zed\CustomerAssets\Persistence\CustomerAssetsEntityManagerInterface;
+use Pyz\Zed\CustomerAssets\Persistence\CustomerAssetsQueryContainerInterface;
 
 
 class CustomerAssetsWritter implements CustomerAssetsWritterInterface
@@ -18,6 +20,10 @@ class CustomerAssetsWritter implements CustomerAssetsWritterInterface
      */
     protected CustomerAssetsEntityManagerInterface $entityManager;
 
+    /**
+     * @var \Pyz\Zed\CustomerAssets\Persistence\CustomerAssetsQueryContainerInterface
+     */
+    protected CustomerAssetsQueryContainerInterface $queryContainer;
 
     /**
      * 
@@ -25,11 +31,13 @@ class CustomerAssetsWritter implements CustomerAssetsWritterInterface
      */
     public function __construct(
         CustomerAssetsEntityManagerInterface $entityManager,
+        CustomerAssetsQueryContainerInterface $queryContainer,
     ) {
         $this->entityManager = $entityManager;
+        $this->queryContainer = $queryContainer;
     }
 
-     /**
+    /**
      * Summary of addCustomerAssets
      * @param \Generated\Shared\Transfer\CustomerAssetsTransfer $customerAssetsTransfer
      * 
@@ -40,7 +48,7 @@ class CustomerAssetsWritter implements CustomerAssetsWritterInterface
         return $this->entityManager->createCustomerAssets($customerAssetsTransfer);
     }
 
-     /**
+    /**
      * Summary of addCustomerAssets
      * @param \Generated\Shared\Transfer\CustomerAssetsTransfer $customerAssetsTransfer
      * 
@@ -51,5 +59,46 @@ class CustomerAssetsWritter implements CustomerAssetsWritterInterface
         return $this->entityManager->removeCustomerAssets($customerAssetsTransfer);
     }
 
+    /**
+     * Summary of addCustomerAssets
+     * 
+     * @return bool
+     */
+    public function syncOrderItemToAssets(): bool
+    {
 
+        $salesOrderItemEntityCollection = $this->getAllSalesOrderItemEntity();
+
+        foreach ($salesOrderItemEntityCollection as $key => $spySalesOrderItemEntity) {
+            $customerAssetsTransfer = new CustomerAssetsTransfer();
+            $idCustomerArr = explode('-', $spySalesOrderItemEntity->getOrder()->getCustomerReference());
+            $customerAssetsTransfer->setFkCustomer($idCustomerArr[2])
+                                    ->setFkSalesOrderItem($spySalesOrderItemEntity->getIdSalesOrderItem())
+                                    ->setAppointmentDate($spySalesOrderItemEntity->getAppointmentDate())
+                                    ->setFkSku($spySalesOrderItemEntity->getSku());
+            
+            $customerAssetsTransfer = $this->addCustomerAssets($customerAssetsTransfer);
+            if ($customerAssetsTransfer->getIdCustomerAssets()) {
+                $isSuccess = $this->entityManager->markItemToAlreadyInAssets($spySalesOrderItemEntity->getIdSalesOrderItem());
+                if (!$isSuccess) {
+                    return false;
+                }
+            }   
+            else
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * 
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
+     */
+    public function getAllSalesOrderItemEntity()
+    {
+        return $this->queryContainer->queryAllSalesOrderItemEntity();
+    }
 }

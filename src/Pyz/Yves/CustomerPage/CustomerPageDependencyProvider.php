@@ -30,6 +30,11 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
     /**
      * @var string
      */
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER_ASSETS = 'CLIENT_CUSTOMER_ASSETS';
 
     /**
@@ -43,6 +48,7 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
 
         $container = $this->addSessionClient($container);
         $container = $this->addCustomerAssetsClient($container);
+        $container = $this->addProductStorageClient($container);
 
         return $container;
     }
@@ -172,6 +178,20 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
     {
         $container->set(static::CLIENT_CUSTOMER_ASSETS, function (Container $container) {
             return $container->getLocator()->customerAssets()->client();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
+            return $container->getLocator()->productStorage()->client();
         });
 
         return $container;

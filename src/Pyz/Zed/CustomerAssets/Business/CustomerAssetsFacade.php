@@ -54,4 +54,14 @@ class CustomerAssetsFacade extends AbstractFacade implements CustomerAssetsFacad
     {
         return $this->getFactory()->createCustomerAssetsWritter()->removeCustomerAssets($customerAssetsTransfer);
     }
+
+    /**
+     * Summary of addCustomerAssets
+     * 
+     * @return bool
+     */
+    public function syncOrderItemToAssets(): bool
+    {
+        return $this->getFactory()->createCustomerAssetsWritter()->syncOrderItemToAssets();
+    }
 }

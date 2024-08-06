@@ -26,4 +26,11 @@ interface CustomerAssetsEntityManagerInterface
      */
     public function removeCustomerAssets(CustomerAssetsTransfer $customerAssetsTransfer): CustomerAssetsTransfer;
 
+    /**
+     * @param int $idSalesOrderItem
+     * 
+     * @return bool
+     */
+    public function markItemToAlreadyInAssets(int $idSalesOrderItem): bool;
+
 }

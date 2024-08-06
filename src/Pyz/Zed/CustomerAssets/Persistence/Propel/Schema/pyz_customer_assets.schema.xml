@@ -6,6 +6,7 @@
         <column name="fk_sku" required="true" type="VARCHAR"/>
         <column name="fk_customer" required="true" type="INTEGER"/>
         <column name="fk_sales_order_item" required="false" type="INTEGER"/>
+        <column name="appointment_date" type="VARCHAR" size="255" required="false"/>
 
         <foreign-key name="pyz_customer_assets-fk_sku" foreignTable="spy_product" phpName="Product" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_sku" foreign="sku"/>

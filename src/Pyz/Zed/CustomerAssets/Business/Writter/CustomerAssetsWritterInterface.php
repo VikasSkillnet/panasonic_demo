@@ -27,5 +27,12 @@ interface CustomerAssetsWritterInterface
      * @return \Generated\Shared\Transfer\CustomerAssetsTransfer
      */
     public function removeCustomerAssets(CustomerAssetsTransfer $customerAssetsTransfer): CustomerAssetsTransfer;
+
+    /**
+     * Summary of addCustomerAssets
+     * 
+     * @return bool
+     */
+    public function syncOrderItemToAssets(): bool;
     
 }

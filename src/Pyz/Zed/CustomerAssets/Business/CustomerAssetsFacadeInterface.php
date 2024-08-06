@@ -18,7 +18,7 @@ interface CustomerAssetsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerAssetsListTransfer
      */
-    public function getCustomerAssets(CustomerAssetsListTransfer $customerAssetsListTransfer, $idCustomer) : CustomerAssetsListTransfer;
+    public function getCustomerAssets(CustomerAssetsListTransfer $customerAssetsListTransfer, $idCustomer): CustomerAssetsListTransfer;
 
     /**
      * @api
@@ -27,7 +27,7 @@ interface CustomerAssetsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerAssetsTransfer
      */
-    public function addCustomerAssets(CustomerAssetsTransfer $customerAssetsTransfer) : CustomerAssetsTransfer;
+    public function addCustomerAssets(CustomerAssetsTransfer $customerAssetsTransfer): CustomerAssetsTransfer;
 
     /**
      * @api
@@ -36,6 +36,13 @@ interface CustomerAssetsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerAssetsTransfer
      */
-    public function removeCustomerAssets(CustomerAssetsTransfer $customerAssetsTransfer) : CustomerAssetsTransfer;
-    
+    public function removeCustomerAssets(CustomerAssetsTransfer $customerAssetsTransfer): CustomerAssetsTransfer;
+
+    /**
+     * Summary of addCustomerAssets
+     * 
+     * @return bool
+     */
+    public function syncOrderItemToAssets(): bool;
+
 }

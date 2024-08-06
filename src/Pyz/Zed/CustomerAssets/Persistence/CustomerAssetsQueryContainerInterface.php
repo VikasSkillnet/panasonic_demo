@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CustomerAssetsQueryContainerInterface extends QueryContainerInterface
 {
-   
+
     /**
      * Specification:
      * - TODO: Add method specification.
@@ -27,5 +27,11 @@ interface CustomerAssetsQueryContainerInterface extends QueryContainerInterface
      */
     public function queryCustomerAssets($idCustomer, ?FilterTransfer $filterTransfer = null);
 
-    
+     /**
+     * 
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
+     */
+    public function queryAllSalesOrderItemEntity();
+
+
 }

@@ -23,31 +23,25 @@
 				<th>BIOS CONFIG</th>
 				<th>RMA</th>
 				<th>HW WARRANTY</th>
+				<th>SERVICE DATE</th>
 				<th>SUB. EXPIRY DATE</th>
 				<th>ASSET REPORT</th>
 			</thead>
 			<tbody>
 				{% for asset in data.customerAssets %}
 					<tr>
-						<td
-							class="transform-cell spacing-top spacing-top--inner spacing-top--big">
-							{# {% include molecule('product-item-image') with {
-																						modifiers: ['small'],
-																						data: {
-																							name: '',
-																							image: asset.imageUrl,
-																						},
-																					} only %} #}
+						<td class="transform-cell spacing-top spacing-top--inner spacing-top--big">
 							<img src="{{ asset.imageUrl }}" alt="" height="50" width="50">
 
 						</td>
-						<td class="transform-cell">{{ asset.product.localizedAttributes[0].name }}</td>
+						<td class="transform-cell"><a target="_blank" href="{{ url(asset.pdpUrl) }}">{{ asset.product.localizedAttributes[0].name }}</a></td>
 						<td class="transform-cell">NA</td>
 						<td class="transform-cell">NA</td>
 						<td class="transform-cell">NA</td>
+						<td class="transform-cell">{{ asset.appointmentDate != '' ? asset.appointmentDate | date : 'N/A' }}</td>
 						<td class="transform-cell">12/31/2024</td>
 						<td class="transform-cell grid grid--center">
-							<a href="">
+							<a href="#">
 								View 
 							</a>
 

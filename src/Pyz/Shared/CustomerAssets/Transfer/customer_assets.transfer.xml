@@ -7,6 +7,8 @@
         <property name="idCustomerAssets" type="integer"/>
         <property name="fkSku" type="string"/>
         <property name="imageUrl" type="string"/>
+        <property name="pdpUrl" type="string"/>
+        <property name="appointmentDate" type="string"/>
         <property name="fkCustomer" type="integer"/>
         <property name="fkSalesOrderItem" type="integer"/>
         <property name="orderItem" type="Item"/>

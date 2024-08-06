@@ -39,7 +39,8 @@ class CustomerAssetsBusinessFactory extends AbstractBusinessFactory
     public function createCustomerAssetsWritter(): CustomerAssetsWritterInterface
     {
         return new CustomerAssetsWritter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getQueryContainer(),
         );
     }
 

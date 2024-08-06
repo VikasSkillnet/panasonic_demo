@@ -26,7 +26,11 @@ class CustomerAssetsEntityManager extends AbstractEntityManager implements Custo
     {
         $customerAssetsEntity = $this->getFactory()->createCustomerAssetsEntity();
         $customerAssetsEntity->fromArray($customerAssetsTransfer->toArray());
-        $customerAssetsEntity->save();
+        try {
+            $customerAssetsEntity->save();
+        } catch (\Throwable $th) {
+            return new CustomerAssetsTransfer();
+        }
 
         return $customerAssetsTransfer->fromArray($customerAssetsEntity->toArray(), true);
     }
@@ -48,5 +52,24 @@ class CustomerAssetsEntityManager extends AbstractEntityManager implements Custo
         }
 
         return (new CustomerAssetsTransfer())->setIsDeleted(true);
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     * 
+     * @return bool
+     */
+    public function markItemToAlreadyInAssets(int $idSalesOrderItem): bool
+    {
+        $spySalesOrderItem = $this->getFactory()->createSpySalesOrderItemQuery()->findOneByIdSalesOrderItem($idSalesOrderItem);
+        $spySalesOrderItem->setIsAlradyAddedInAssets(true);
+
+        try {
+            $spySalesOrderItem->save();
+        } catch (\Throwable $th) {
+            return false;
+        }
+
+        return true;
     }
 }

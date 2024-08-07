@@ -53,16 +53,13 @@
 	{% block embeddedData %}
 		{% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}{% endwidget %}
 
-
-		{% if data.product.attributes.is_service is defined and data.product.attributes.is_service == 'true' %}
-			<br>
-			<div>
-				<h5 for="appointmentDate">Book an appointment:
-					<input type="datetime-local" id="appointmentDate" name="appointmentDate" required>
-				</h5>
-			</div>
-		{% endif %}
-
+		<br>
+		<div>
+			<h5 for="appointmentDate">Book an appointment:
+			<input type="datetime-local" id="appointmentDate" name="appointmentDate" >
+			</h5>
+		</div>
+		
 		{% if can('SeeAddToCartPermissionPlugin') %}
 			<div class="{{ data.config.name }}__add-to-cart">
 				{% widget 'ProductPackagingUnitWidget' args [data.product, data.isDisabled, data.options] only %}

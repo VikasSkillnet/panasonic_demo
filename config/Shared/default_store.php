@@ -1,3 +1,3 @@
 <?php
 
-return 'US';
+return getenv('SPRYKER_DEFAULT_STORE') ?: 'DE';

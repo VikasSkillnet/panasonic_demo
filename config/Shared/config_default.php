@@ -659,12 +659,12 @@ $config[ShopUiConstants::YVES_ASSETS_URL_PATTERN] = '/assets/' . (getenv('SPRYKE
 // >>> Availability Notification
 $config[AvailabilityNotificationConstants::BASE_URL_YVES_PORT] = $yvesPort;
 $config[AvailabilityNotificationConstants::STORE_TO_YVES_HOST_MAPPING] = [
-    // 'DE' => getenv('SPRYKER_YVES_HOST_DE'),
-    // 'AT' => getenv('SPRYKER_YVES_HOST_AT'),
+    'DE' => getenv('SPRYKER_YVES_HOST_DE'),
+    'AT' => getenv('SPRYKER_YVES_HOST_AT'),
     'US' => getenv('SPRYKER_YVES_HOST_US'),
 ];
 $config[AvailabilityNotificationConstants::REGION_TO_YVES_HOST_MAPPING] = [
-    // 'EU' => getenv('SPRYKER_YVES_HOST_EU'),
+    'EU' => getenv('SPRYKER_YVES_HOST_EU'),
     'US' => getenv('SPRYKER_YVES_HOST_US'),
 ];
 

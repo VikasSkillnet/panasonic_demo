@@ -11,68 +11,56 @@
 } %}
 
 {% block productDescription %}
-	<div class="{{ config.name }}__col {{ config.name }}__col--description col">
-		<div class="{{ config.name }}__inner grid grid--stretch grid--gap">
-			<div class="{{ config.name }}__col {{ config.name }}__col--content col">
-				{{ block('title') }}
-				{{ block('info') }}
-				{{ block('productConfiguration') }}
-				{{ block('productInfo') }}
+    <div class="{{ config.name }}__col {{ config.name }}__col--description col">
+        <div class="{{ config.name }}__inner grid grid--stretch grid--gap">
+            <div class="{{ config.name }}__col {{ config.name }}__col--content col">
+                {{ block('title') }}
+                {{ block('info') }}
+                {{ block('productConfiguration') }}
+                {{ block('productInfo') }}
 
-				{% if data.hasAdditionalTitle %}
-					<h6 class="{{ config.name }}__additional-title">{{ 'cart_note.form.comment' | trans }}:</h6>
-				{% endif %}
-			</div>
+                {% if data.hasAdditionalTitle %}
+                    <h6 class="{{ config.name }}__additional-title">{{ 'cart_note.form.comment' | trans }}:</h6>
+                {% endif %}
+            </div>
 
-			<div class="{{ config.name }}__col {{ config.name }}__col--total col">
-				<div class="{{ config.name }}__inner {{ config.name }}__inner--actions {{ config.name }}__inner--full-height grid grid--column grid--justify-column">
-					<div class="col col--sm-12">
-						<div class="{{ config.name }}__inner {{ config.name }}__inner--total grid grid--column">
-							{% if can('SeePricePermissionPlugin') %}
-								{{ block('price') }}
-							{% endif %}
+            <div class="{{ config.name }}__col {{ config.name }}__col--total col">
+                <div class="{{ config.name }}__inner {{ config.name }}__inner--actions {{ config.name }}__inner--full-height grid grid--column grid--justify-column">
+                    <div class="col col--sm-12">
+                        <div class="{{ config.name }}__inner {{ config.name }}__inner--total grid grid--column">
+                            {% if can('SeePricePermissionPlugin') %}
+                                {{ block('price') }}
+                            {% endif %}
 
-							{{ block('quantity') }}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		{# {% if listItem.appointmentDate %}
-			<div>
-				<label for="appointmentDate">
-					Appointment Date :-
-				</label>
-				<span>
-					{{ listItem.appointmentDate | date('d-m-Y H:i') }}
-				</span>
-			</div>
-		{% endif %} #}
-
-		<div class="{{ config.name }}__inner grid grid--stretch grid--gap">
-			<div class="{{ config.name }}__col {{ config.name }}__col--content col">
-				{% block note %}
-					{% widget 'CartItemNoteFormWidget' args [listItem, data.list] with {
+                            {{ block('quantity') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="{{ config.name }}__inner grid grid--stretch grid--gap">
+            <div class="{{ config.name }}__col {{ config.name }}__col--content col">
+                {% block note %}
+                    {% widget 'CartItemNoteFormWidget' args [listItem, data.list] with {
                         data: {
                             isTitleVisible: false,
                         },
                     } only %}
-					{% endwidget %}
-				{% endblock %}
+                    {% endwidget %}
+                {% endblock %}
 
-				{{ block('productOptions') }}
-			</div>
+                {{ block('productOptions') }}
+            </div>
 
-			<div class="{{ config.name }}__col {{ config.name }}__col--total col">
-				<div class="{{ config.name }}__inner {{ config.name }}__inner--actions {{ config.name }}__inner--full-height grid grid--column grid--justify-column">
-					<div class="col col--sm-12">
-						<div class="{{ config.name }}__inner {{ config.name }}__inner--total grid grid--column">
-							{% block totalPrice %}
-								{% if can('SeePricePermissionPlugin') %}
-									{% set totalPrice = listItem.unitPrice is defined ? listItem.sumSubtotalAggregation : listItem.price %}
+            <div class="{{ config.name }}__col {{ config.name }}__col--total col">
+                <div class="{{ config.name }}__inner {{ config.name }}__inner--actions {{ config.name }}__inner--full-height grid grid--column grid--justify-column">
+                    <div class="col col--sm-12">
+                        <div class="{{ config.name }}__inner {{ config.name }}__inner--total grid grid--column">
+                            {% block totalPrice %}
+                                {% if can('SeePricePermissionPlugin') %}
+                                    {% set totalPrice = listItem.unitPrice is defined ? listItem.sumSubtotalAggregation : listItem.price %}
 
-									{% embed molecule('money-price') with {
+                                    {% embed molecule('money-price') with {
                                         class: 'grid grid--wide',
                                         modifiers: ['secondary'],
                                         data: {
@@ -80,39 +68,39 @@
                                             currencyIsoCode: data.currencyIsoCode,
                                         },
                                     } only %}
-										{% block body %}
-											<strong class="col col--sm-4 col--lg-5 text-left">{{ 'cart.item.item_total' | trans }}</strong>
+                                        {% block body %}
+                                            <strong class="col col--sm-4 col--lg-5 text-left">{{ 'cart.item.item_total' | trans }}</strong>
 
-											<div class="col col--sm-8 col--lg-7">
-												{{ parent() }}
-											</div>
-										{% endblock %}
+                                            <div class="col col--sm-8 col--lg-7">
+                                                {{ parent() }}
+                                            </div>
+                                        {% endblock %}
 
-										{% block priceMode %}{% endblock %}
-									{% endembed %}
-								{% endif %}
-							{% endblock %}
-						</div>
-					</div>
+                                        {% block priceMode %}{% endblock %}
+                                    {% endembed %}
+                                {% endif %}
+                            {% endblock %}
+                        </div>
+                    </div>
 
-					{{ block('deleteButton') }}
-				</div>
-			</div>
-		</div>
-	</div>
+                    {{ block('deleteButton') }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block itemAttributes %}
-	{% if data.attributes is not empty %}
-		{% embed molecule('product-item-variant-selector') with {
+    {% if data.attributes is not empty %}
+        {% embed molecule('product-item-variant-selector') with {
             data: {
                 productItem: listItem,
                 productItemAttributes: data.attributes,
                 canEdit: data.canEdit,
             },
         } only %}
-			{% block variantSelector %}
-				{% include molecule('custom-select') with {
+            {% block variantSelector %}
+                {% include molecule('custom-select') with {
                     modifiers: ['small', 'mobile-expand', 'mobile-xs'],
                     data: {
                         label: ('product.attribute.' ~ attributeName) | trans,
@@ -125,7 +113,7 @@
                         'config-theme': 'small',
                     },
                 } only %}
-			{% endblock %}
-		{% endembed %}
-	{% endif %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
 {% endblock %}

@@ -7,7 +7,6 @@
 
 namespace Pyz\Yves\CartPage\Controller;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use SprykerShop\Yves\CartPage\Controller\CartController as SprykerCartController;
 use SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -49,45 +48,7 @@ class CartController extends SprykerCartController
      */
     public function addAction(Request $request, $sku): RedirectResponse
     {
-        // parent::addAction($request, $sku);
-
-         $form = $this->getFactory()->createCartPageFormFactory()->getAddToCartForm()->handleRequest($request);
-
-        if (!$form->isSubmitted() || !$form->isValid()) {
-            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
-
-            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
-        }
-
-        $quantity = $request->get('quantity', 1);
-        $appointmentDate = $request->get('appointmentDate');
-
-        if (!$this->canAddCartItem()) {
-            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
-
-            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
-        }
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer
-            ->setSku($sku)
-            ->setAppointmentDate($appointmentDate)
-            ->setQuantity($quantity);
-
-        $this->addProductOptions($request->get('product-option', []), $itemTransfer);
-
-        $itemTransfer = $this->executePreAddToCartPlugins($itemTransfer, $request->request->all());
-
-        $this->getFactory()
-            ->getCartClient()
-            ->addItem($itemTransfer, $request->request->all());
-
-        $this->getFactory()
-            ->getZedRequestClient()
-            ->addResponseMessagesToMessenger();
-
-        // return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
-
+        parent::addAction($request, $sku);
 
         return $this->redirectToReferer($request);
     }
